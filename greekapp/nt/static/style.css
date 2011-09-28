@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    width: 960px;
+    margin: 0 auto;
+}
+
+#reader {
+    width: 640px;
+    font-size: 2em;
+    float: right;
+}
+
+#reader span {
+    cursor: pointer;
+}
+
+#sidebar {
+    width: 320px;
+    float: left;
+}
+
+.word {
+    display: none;
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    padding: 5px;
+    background: #ececec;
+    font-size: 14px;
+    font-family: 'Helvetica Neue';
+}
