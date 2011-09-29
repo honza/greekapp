@@ -180,9 +180,15 @@ class Bible(object):
                 data['gender'] = None
         else:
             data['type'] = 'Verb'
-            data['tense'] = tenses[parse[1][0]]
-            data['voice'] = voices[parse[1][1]]
-            data['mood'] = moods[parse[1][2]]
+            # handle 2-char tenses
+            if parse[1][0] == '2':
+                data['tense'] = tenses[parse[1][0] + parse[1][1]]
+                data['voice'] = voices[parse[1][2]]
+                data['mood'] = moods[parse[1][3]]
+            else:
+                data['tense'] = tenses[parse[1][0]]
+                data['voice'] = voices[parse[1][1]]
+                data['mood'] = moods[parse[1][2]]
 
             try:
                 person = int(parse[2][0])
