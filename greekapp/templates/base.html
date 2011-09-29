@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" charset="utf-8">
     <script src="/static/jquery.js" type="text/javascript"></script>
+    <script src="/static/values.js" type="text/javascript"></script>
     <script src="/static/models.js" type="text/javascript"></script>
     <script src="/static/views.js" type="text/javascript"></script>
     <script src="/static/app.js" type="text/javascript"></script>
@@ -13,7 +14,25 @@
 
         <div id="reader"></div>
         <div id="sidebar">
-            <ul id="books"></ul>
+            <ul id="books">
+                {% for book in books %}
+                    <li class="book">
+                        {{ book.full }}
+                        <ul>
+                            {% for chapter in book.chapters %}
+                                <li class="chapter">
+                                    {{ chapter.number }}
+                                    <ul>
+                                        {% for verse in chapter.verses %}
+                                            <li class="verse">{{ verse }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
 
     </div>

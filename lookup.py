@@ -3,47 +3,106 @@ import sqlite3
 import redis
 import hashlib
 
+book_order = [
+    'Matthew',
+    'Mark',
+    'Luke',
+    'John',
+    'Acts',
+    'Romans',
+    '1 Corinthians',
+    '2 Corinthians',
+    'Galatians',
+    'Ephesians',
+    'Phillipians',
+    'Colossians',
+    '1 Thessalonians',
+    '2 Thessalonians',
+    '1 Timothy',
+    '2 Timothy',
+    'Titus',
+    'Philemon',
+    'Hebrews',
+    'James',
+    '1 Peter',
+    '2 Peter',
+    '1 John',
+    '2 John',
+    '3 John',
+    'Jude',
+    'Revelation'
+]
 books = {
-    '1 Corinthians': 'cor1',
-    '1 John': 'john1',
-    '1 Peter': 'peter1',
-    '1 Thessalonians': 'thess1',
-    '1 Timothy': 'tim1',
-    '2 Corinthians': 'cor2',
-    '2 John': 'john2',
-    '2 Peter': 'peter2',
-    '2 Thessalonians': 'thess2',
-    '2 Timothy': 'tim2',
-    '3 John': 'john3',
+    'Matthew': 'matthew',
+    'Mark': 'mark',
+    'Luke': 'luke',
+    'John': 'john',
     'Acts': 'acts',
-    'Colossians': 'col',
-    'Ephesians': 'eph',
+    'Romans': 'romans',
+    '1 Corinthians': 'cor1',
+    '2 Corinthians': 'cor2',
     'Galatians': 'gal',
+    'Ephesians': 'eph',
+    'Phillipians': 'phil',
+    'Colossians': 'col',
+    '1 Thessalonians': 'thess1',
+    '2 Thessalonians': 'thess2',
+    '1 Timothy': 'tim1',
+    '2 Timothy': 'tim2',
+    'Titus': 'titus',
+    'Philemon': 'phm',
     'Hebrews': 'heb',
     'James': 'james',
-    'John': 'john',
+    '1 Peter': 'peter1',
+    '2 Peter': 'peter2',
+    '1 John': 'john1',
+    '2 John': 'john2',
+    '3 John': 'john3',
     'Jude': 'jude',
-    'Luke': 'luke',
-    'Mark': 'mark',
-    'Matthew': 'matthew',
-    'Philemon': 'phm',
-    'Phillipians': 'phil',
-    'Revelation': 'revelation',
-    'Romans': 'romans',
-    'Titus': 'titus'
+    'Revelation': 'revelation'
+}
+
+abbr2full = {
+    'cor1': '1 Corinthians',
+    'john1': '1 John',
+    'peter1': '1 Peter',
+    'thess1': '1 Thessalonians',
+    'tim1': '1 Timothy',
+    'cor2': '2 Corinthians',
+    'john2': '2 John',
+    'peter2': '2 Peter',
+    'thess2': '2 Thessalonians',
+    'tim2': '2 Timothy',
+    'john3': '3 John',
+    'acts': 'Acts',
+    'col': 'Colossians',
+    'eph': 'Ephesians',
+    'gal': 'Galatians',
+    'heb': 'Hebrews',
+    'james': 'James',
+    'john': 'John',
+    'jude': 'Jude',
+    'luke': 'Luke',
+    'mark': 'Mark',
+    'matthew': 'Matthew',
+    'phm': 'Philemon',
+    'phil': 'Phillipians',
+    'revelation': 'Revelation',
+    'romans': 'Romans',
+    'titus': 'Titus'
 }
 
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 """
 john:15:9 => [
-    665dcf6c1ca39af1e1b96904ddf6807102976a01,
+    665dcf6c1ca39af1e1b96904ddf6807102976a01:
     665dcf6c1ca39af1e1b96904ddf6807102976a01
 ]
 
 words:665dcf6c1ca39af1e1b96904ddf6807102976a01 => [
-    "word",
-    "parse",
+    "word":
+    "parse":
     "strong"
 ]
 
@@ -143,7 +202,43 @@ class Loader(object):
         text = cgi.escape(text).encode('ascii', 'xmlcharrefreplace')
         return text
 
+    def print_structure(self):
+        self.all_books()
+
+        res = {}
+
+        for book in self.data.keys():
+
+            chapters = []
+
+
+            for i in range(1, len(self.data[book].keys()) + 1):
+                verses = [x for x in self.data[book][i].keys()]
+                chapters.append({
+                    'number': i,
+                    'verses': verses
+                })
+
+
+            res[abbr2full[book]] = {
+                'chapters': chapters,
+                'full': abbr2full[book],
+                'abbr': book
+            }
+
+
+        final = []
+
+        for book in book_order:
+            final.append(res[book])
+
+        import json
+        print json.dumps(final, indent=4)
+
+
+
 
 if __name__ == '__main__':
     loader = Loader()
-    loader.save_redis()
+    #loader.save_redis()
+    loader.print_structure()

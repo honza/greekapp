@@ -1,5 +1,3 @@
-var nt = {};
-
 nt.Models = nt.Models || {};
 
 nt.Models.url = 'http://localhost:8000/nt/book';
