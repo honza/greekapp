@@ -2,9 +2,9 @@ nt.Views = nt.Views || {};
 
 
 nt.Views.Reader = function() {
-  this.el = $('#reader');
-  this.showVerse('John', 3, 16, $.proxy(function(html) {
-    this.el.append(html); 
+  this.el = document.getElementById('reader');
+  this.showVerse('John', 3, 16, _(function(html) {
+    this.el.appendChild(html); 
   }, this));
 };
 
@@ -16,7 +16,7 @@ nt.Views.Reader.prototype.showVerse = function(book, chapter, verse, callback) {
 
 
 nt.Views.Books = function() {
-  this.el = $('#sidebar');
+  this.el = document.getElementById('sidebar');
 };
 
 

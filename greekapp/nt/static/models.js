@@ -69,10 +69,25 @@ nt.Models.Verse = function(book, chapter, verse, callback) {
 };
 
 nt.Models.Verse.prototype.get = function() {
-  $.getJSON(this.getUrl_(), null, $.proxy(function(data) {
-    this.parse(data);
-    this.callback(this.html);
-  }, this));
+
+  ajax({
+    type: 'get',
+    url: this.getUrl_(),
+    data: {},
+    timeout: 5000,
+    onSuccess: _(function(data) {
+      data = JSON.parse(data);
+      this.parse(data);
+      this.callback(this.html);
+    }, this),
+    onComplete: function() {
+
+    },
+    onError: function() {
+
+    }
+  });
+
 };
 
 nt.Models.Verse.prototype.getUrl_ = function() {
@@ -80,12 +95,12 @@ nt.Models.Verse.prototype.getUrl_ = function() {
 };
 
 nt.Models.Verse.prototype.parse = function(data) {
-  var html = $('<p/>');  
+  var html = document.createElement('p');
 
-  $.each(data, $.proxy(function(index, item) {
-    var word = new nt.Models.Word(item);
-    html.append(word.getWidget());
-  }, this));
+  for (var i=0; i < data.length; i++) {
+    var word = new nt.Models.Word(data[i]);
+    html.appendChild(word.getWidget());
+  }
 
   this.html = html;
 
@@ -100,22 +115,30 @@ nt.Models.Word = function(word) {
 
 
 nt.Models.Word.prototype.getWidget = function() {
-  this.span = $('<span/>');
-  this.span.html(this.word + ' ');
+  this.span = document.createElement('span');
+  this.span.innerHTML = this.word + ' ';
 
-  this.span.hover(
-    $.proxy(function() {
-    this.container.show();
-  }, this),
-    $.proxy(function() {
-    this.container.hide();
-  }, this));
+  //this.span.hover(
+    //$.proxy(function() {
+    //this.container.show();
+  //}, this),
+    //$.proxy(function() {
+    //this.container.hide();
+  //}, this));
 
-  this.container = $('<div class="word"></div>');
-  this.container.append($('<p/>').html('Type: ' + this.parse.type));
-  this.container.append($('<p/>').html(this.lexicon));
+  this.container = document.createElement('div');
+  this.container.className = 'word';
 
-  this.span.append(this.container);
+  this.parseData = document.createElement('p');
+  this.parseData.innerHTML = 'Type: ' + this.parse.type;
+
+  this.lexiconData = document.createElement('p');
+  this.lexiconData.innerHTML = this.lexicon;
+
+  this.container.appendChild(this.parseData);
+  this.container.appendChild(this.lexiconData);
+
+  this.span.appendChild(this.container);
 
   return this.span;
 };
