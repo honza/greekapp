@@ -95,6 +95,7 @@ nt.Models.Word = function(word) {
   this.strong = word.strong;
   this.parse = word.parse;
   this.word = word.word;
+  this.lexicon = word.lexicon;
 };
 
 
@@ -111,8 +112,8 @@ nt.Models.Word.prototype.getWidget = function() {
   }, this));
 
   this.container = $('<div class="word"></div>');
-  this.container.append($('<p/>').html('Strong: ' + this.strong));
   this.container.append($('<p/>').html('Type: ' + this.parse.type));
+  this.container.append($('<p/>').html(this.lexicon));
 
   this.span.append(this.container);
 
