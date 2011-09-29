@@ -205,5 +205,6 @@ class Bible(object):
         return {
             'strong': word['strong'],
             'word': word['word'],
-            'parse': data
+            'parse': data,
+            'lexicon': self.client.get('strong:%s' % word['strong'])
         }
