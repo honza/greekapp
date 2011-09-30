@@ -1,7 +1,10 @@
+from django.core.management.base import BaseCommand
+from django.conf import settings
 import cgi
 import sqlite3
 import redis
 import hashlib
+
 
 book_order = [
     'Matthew',
@@ -32,6 +35,8 @@ book_order = [
     'Jude',
     'Revelation'
 ]
+
+
 books = {
     'Matthew': 'matthew',
     'Mark': 'mark',
@@ -61,6 +66,7 @@ books = {
     'Jude': 'jude',
     'Revelation': 'revelation'
 }
+
 
 abbr2full = {
     'cor1': '1 Corinthians',
@@ -92,7 +98,6 @@ abbr2full = {
     'titus': 'Titus'
 }
 
-r = redis.Redis(host='localhost', port=6379, db=0)
 
 """
 john:15:9 => [
@@ -117,8 +122,9 @@ class Loader(object):
     it. It also knows how to talk to Redis and give it all that data.
     """
 
-    def __init__(self):
-        self.connection = sqlite3.connect('nt.db')
+    def __init__(self, path):
+        self.client = redis.Redis(host='localhost', port=6379, db=0)
+        self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
         self.passage = ''
         self.data = {}
@@ -142,10 +148,10 @@ class Loader(object):
                             self.shas[s] = 0
                         else:
                             self.shas[s] += 1
-                        r.rpush('%s:%d:%d' % (book_name, chapter, verse), s)
-                        r.hset('word:%s' % s, 'word', word['word'])
-                        r.hset('word:%s' % s, 'parse', word['parse'])
-                        r.hset('word:%s' % s, 'strong', word['strong'])
+                        self.client.rpush('%s:%d:%d' % (book_name, chapter, verse), s)
+                        self.client.hset('word:%s' % s, 'word', word['word'])
+                        self.client.hset('word:%s' % s, 'parse', word['parse'])
+                        self.client.hset('word:%s' % s, 'strong', word['strong'])
         self.save_definitions()
 
     def all_books(self):
@@ -193,7 +199,7 @@ class Loader(object):
             number = s[0]
             definition = s[1].replace('\n', '')
             print number
-            r.set('strong:%d' % number, definition)
+            self.client.set('strong:%d' % number, definition)
 
     def unicodeToHTMLEntities(self, text):
         """
@@ -237,7 +243,13 @@ class Loader(object):
 
 
 
+class Command(BaseCommand):
 
-if __name__ == '__main__':
-    loader = Loader()
-    loader.save_redis()
+    def handle(self, *args, **options):
+        path = getattr(settings, 'NT_DB', None)
+        if not path:
+            self.stderr.write("Couldn't find library file.")
+
+        loader = Loader(path)
+        loader.save_redis()
+        self.stdout.write('It worked.\n')

@@ -1,7 +1,10 @@
-# Django settings for greekapp project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+ROOT = os.path.abspath(os.path.dirname(__file__))
+NT_DB = os.path.join(ROOT, '../nt.db')
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
