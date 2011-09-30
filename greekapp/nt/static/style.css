@@ -5,7 +5,16 @@ body {
 
 #wrap {
     width: 960px;
-    margin: 0 auto;
+    margin: 10px auto;
+    background: #FAFFE4;
+    padding: 20px;
+    border: 3px solid #ececec;
+}
+
+h1 {
+    margin-top: 0;
+    font-family: 'Helvetica Neue';
+    font-weight: bold;
 }
 
 input {
@@ -29,9 +38,16 @@ input[type="text"] {
     display: none;
     position: absolute;
     width: 300px;
-    height: 100px;
     padding: 5px;
     background: #ececec;
+    background: #fff;
+    border: 1px solid #333;
     font-size: 14px;
     font-family: 'Helvetica Neue';
+}
+
+#footer {
+    text-align: center;
+    font-family: 'Helvetica Neue';
+    font-size: 13px;
 }
