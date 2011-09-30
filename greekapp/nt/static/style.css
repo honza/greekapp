@@ -8,19 +8,21 @@ body {
     margin: 0 auto;
 }
 
+input {
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+}
+
 #reader {
-    width: 640px;
     font-size: 2em;
-    float: right;
 }
 
 #reader span {
     cursor: pointer;
-}
-
-#sidebar {
-    width: 320px;
-    float: left;
 }
 
 .word {
@@ -32,8 +34,4 @@ body {
     background: #ececec;
     font-size: 14px;
     font-family: 'Helvetica Neue';
-}
-
-.verse, .chapter {
-    display: none;
 }

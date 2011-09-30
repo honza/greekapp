@@ -7,28 +7,9 @@
     <div id="wrap">
         <h1>GreekApp</h1>
 
+        <input type="text" size="50" id="text" /> <input type="button" value="Go" id="go" />
+
         <div id="reader"></div>
-        <div id="sidebar">
-            <ul id="books">
-                {% for book in books %}
-                    <li class="book">
-                        {{ book.full }}
-                        <ul>
-                            {% for chapter in book.chapters %}
-                                <li class="chapter">
-                                    {{ chapter.number }}
-                                    <ul>
-                                        {% for verse in chapter.verses %}
-                                            <li class="verse">{{ verse }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
 
     </div>
 <script src="/static/base.js" type="text/javascript"></script>
