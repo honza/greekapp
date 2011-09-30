@@ -20,11 +20,7 @@
  *  });
  */
 
-(function() {
-
-  var ajax, serialize;
-
-  serialize = function(a) {
+  nt.serialize = function(a) {
 
     var s = [];
 
@@ -39,7 +35,7 @@
     return s.join('&');
   };
 
-  ajax = function(options) {
+  nt.ajax = function(options) {
 
     options = {
       type: options.type || "POST",
@@ -103,6 +99,3 @@
     }
   };
 
-  this.ajax = ajax;
-
-})();
