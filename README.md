@@ -21,7 +21,8 @@ Clone the repo, install the requirements and start redis. Then run:
     $ python load.py
 
 which will open the sqlite database and load all of the data contained therein
-into redis. Once that's done, you can visit the site in your browser:
+into redis. Once that's done, start your django server and you can visit the
+site in your browser:
 
 [http://localhost:8000/nt/](http://localhost:8000/nt/)
 
