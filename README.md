@@ -33,4 +33,4 @@ License
 
 BSD, short and sweet.
 
-https://github.com/honza/greekapp/raw/master/screenshow.jpg
+![Screenshot](https://github.com/honza/greekapp/raw/master/screenshot.jpg)
