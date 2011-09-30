@@ -15,11 +15,6 @@ nt.Views.Reader.prototype.showVerse = function(book, chapter, verse, callback) {
 };
 
 
-nt.Views.Books = function() {
-  this.el = document.getElementById('sidebar');
-};
-
-
 nt.Views.App = function() {
   this.reader = new nt.Views.Reader;
 };
