@@ -1,34 +1,6 @@
-var nt = {};
-
 nt.Models = nt.Models || {};
 
 nt.Models.url = 'http://localhost:8000/nt/book';
-
-nt.Models.books = [
-  'Matthew',
-  'Mark',
-  'Luke',
-  'John',
-  'Acts',
-  'Romans',
-  'Galatians',
-  'Ephesians',
-  'Phillipians',
-  'Colossians',
-  '1 Thessalonians',
-  '2 Thessalonians',
-  '1 Timothy',
-  '2 Timothy',
-  'Titus',
-  'Philemon',
-  'Hebrews',
-  'James',
-  '1 Peter',
-  '2 Peter',
-  '3 Peter',
-  'Jude',
-  'Revelation'
-];
 
 nt.Models.full2abbr = {
   '1 Corinthians': 'cor1',
@@ -70,7 +42,7 @@ nt.Models.Verse = function(book, chapter, verse, callback) {
 
 nt.Models.Verse.prototype.get = function() {
 
-  ajax({
+  nt.ajax({
     type: 'get',
     url: this.getUrl_(),
     data: {},
@@ -79,13 +51,7 @@ nt.Models.Verse.prototype.get = function() {
       data = JSON.parse(data);
       this.parse(data);
       this.callback(this.html);
-    }, this),
-    onComplete: function() {
-
-    },
-    onError: function() {
-
-    }
+    }, this)
   });
 
 };
@@ -118,13 +84,13 @@ nt.Models.Word.prototype.getWidget = function() {
   this.span = document.createElement('span');
   this.span.innerHTML = this.word + ' ';
 
-  //this.span.hover(
-    //$.proxy(function() {
-    //this.container.show();
-  //}, this),
-    //$.proxy(function() {
-    //this.container.hide();
-  //}, this));
+  this.span.onmouseover = _(function() {
+    this.container.style.display = 'block';
+  }, this);
+
+  this.span.onmouseout = _(function() {
+    this.container.style.display = 'none';
+  }, this);
 
   this.container = document.createElement('div');
   this.container.className = 'word';
