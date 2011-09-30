@@ -32,3 +32,5 @@ License
 -------
 
 BSD, short and sweet.
+
+https://github.com/honza/greekapp/raw/master/screenshow.jpg
