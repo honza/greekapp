@@ -240,5 +240,4 @@ class Loader(object):
 
 if __name__ == '__main__':
     loader = Loader()
-    #loader.save_redis()
-    loader.print_structure()
+    loader.save_redis()
