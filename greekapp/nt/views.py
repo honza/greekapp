@@ -1,13 +1,11 @@
 import json
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from bible import Bible, structure
+from bible import Bible
 
 
 def index(request):
-    return render_to_response('base.html', {
-        'books': structure
-    })
+    return render_to_response('base.html', {})
 
 
 def verse(request, book, chapter, verse):
