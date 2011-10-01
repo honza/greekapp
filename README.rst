@@ -1,7 +1,7 @@
 GreekApp
 ========
 
-This is a Django application that allows you to interact with the text of the
+This is a reusable Django application that allows you to interact with the text of the
 New Testament in its original language. This is intended for students of Koine
 Greek.
 
@@ -16,21 +16,17 @@ All of the text, grammar, lexical data and so is in the public domain.
 Installation
 ------------
 
-Clone the repo, install the requirements and start redis. Then run:
-
-    $ python manage.py load
-
-which will open the sqlite database and load all of the data contained therein
-into redis. Once that's done, start your django server and you can visit the
-site in your browser:
-
-[http://localhost:8000/nt/](http://localhost:8000/nt/)
-
-Type in a verse you'd like to study and enjoy.
+1. ``$ pip install django-greekapp``
+2. Add ``greekapp`` to ``INSTALLED_APPS``
+3. Plug GreekApp to your project's ``urls.py``.
+4. Make sure Redis is installed and running
+5. Run the ``load`` management command to load data into Redis
+6. Run the server.
+7. Profit
 
 License
 -------
 
 BSD, short and sweet.
 
-![Screenshot](https://github.com/honza/greekapp/raw/master/screenshot.jpg)
+.. image:: https://github.com/honza/greekapp/raw/master/screenshot.jpg
