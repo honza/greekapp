@@ -1,5 +1,5 @@
+import os
 from django.core.management.base import BaseCommand
-from django.conf import settings
 import cgi
 import sqlite3
 import redis
@@ -257,7 +257,8 @@ class Loader(object):
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        path = getattr(settings, 'NT_DB', None)
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                'nt.db')
         if not path:
             self.stderr.write("Couldn't find library file.")
 
