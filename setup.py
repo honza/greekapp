@@ -1,7 +1,7 @@
 from setuptools import setup
 
 description = 'New testament greek app for django.'
-long_desc = open('README.md').read()
+long_desc = open('README.rst').read()
 
 setup(
     name='django-greekapp',
