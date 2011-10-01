@@ -19,7 +19,8 @@ setup(
         'greekapp': [
             'templates/greekapp/index.html',
             'static/greekapp.min.js',
-            'static/greekapp.css'
+            'static/greekapp.css',
+            'managements/commands/nt.db'
         ]
     }
 )
