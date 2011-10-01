@@ -194,13 +194,21 @@ class Bible(object):
                 person = int(parse[2][0])
             except ValueError:
                 person = parse[2][0]
+            except IndexError:
+                person = 0
 
             if isinstance(person, int):
-                data['person'] = parse[2][0]
+                try:
+                    data['person'] = parse[2][0]
+                except IndexError:
+                    pass
             else:
                 data['case'] = cases[person]
 
-            data['number'] = parse[2][1]
+            try:
+                data['number'] = parse[2][1]
+            except IndexError:
+                pass
 
             # TODO: Test with a verse that has gerongives
             try:
