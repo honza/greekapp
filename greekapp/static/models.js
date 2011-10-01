@@ -95,13 +95,15 @@ nt.Models.Word.prototype.getWidget = function() {
   this.container = document.createElement('div');
   this.container.className = 'word';
 
-  this.parseData = document.createElement('p');
-  this.parseData.innerHTML = 'Type: ' + this.parse.type;
+  for (var k in this.parse) {
+    var el = document.createElement('p');
+    el.innerHTML = k + ': ' + this.parse[k];
+    this.container.appendChild(el);
+  }
 
   this.lexiconData = document.createElement('p');
   this.lexiconData.innerHTML = this.lexicon;
 
-  this.container.appendChild(this.parseData);
   this.container.appendChild(this.lexiconData);
 
   this.span.appendChild(this.container);
