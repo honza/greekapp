@@ -6,6 +6,10 @@ import redis
 import hashlib
 
 
+class DataPresentException(Exception):
+    pass
+
+
 book_order = [
     'Matthew',
     'Mark',
@@ -124,6 +128,12 @@ class Loader(object):
 
     def __init__(self, path):
         self.client = redis.Redis(host='localhost', port=6379, db=0)
+
+        # Do a test look up to see if there is any data
+        test = self.client.lrange('john:15:9', 0, 100)
+        if test:
+            raise DataPresentException
+
         self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
         self.passage = ''
@@ -250,6 +260,10 @@ class Command(BaseCommand):
         if not path:
             self.stderr.write("Couldn't find library file.")
 
-        loader = Loader(path)
-        loader.save_redis()
+        try:
+            loader = Loader(path)
+            loader.save_redis()
+        except DataPresentException:
+            self.stderr.write('There is data in redis already!\n')
+            return
         self.stdout.write('It worked.\n')
