@@ -163,6 +163,7 @@ class Loader(object):
                         self.client.hset('word:%s' % s, 'parse', word['parse'])
                         self.client.hset('word:%s' % s, 'strong', word['strong'])
         self.save_definitions()
+        self.client.set('requests', 0)
 
     def all_books(self):
         """

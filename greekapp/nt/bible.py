@@ -156,6 +156,7 @@ class Bible(object):
         for w in words:
             data = self.client.hgetall('word:%s' % w)
             final.append(self.parse_word(data))
+        self.client.incr('requests')
         return final
 
     def parse_word(self, word):
