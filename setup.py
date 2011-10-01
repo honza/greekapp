@@ -5,7 +5,7 @@ long_desc = open('README.rst').read()
 
 setup(
     name='django-greekapp',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/honza/greekapp',
     install_requires=['django', 'redis'],
     description=description,
