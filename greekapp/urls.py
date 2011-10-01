@@ -1,18 +1,7 @@
-from django.conf.urls.defaults import patterns, include, url
-from django.conf import settings
-from django.contrib import admin
-
-
-admin.autodiscover()
-
+from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-    url(r'^nt/', include('greekapp.nt.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'greekapp.views.index', name='index'),
+    url(r'^book/(?P<book>[a-zA-Z0-9]+)/(?P<chapter>[0-9]+)/(?P<verse>[0-9]+)/$',
+        'greekapp.views.verse', name='verse'),
 )
-
-
-if settings.DEBUG:
-    urlpatterns += patterns('django.contrib.staticfiles.views',
-        url(r'^static/(?P<path>.*)$', 'serve'),
-    )
